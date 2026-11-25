@@ -20,12 +20,14 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - uses: android-actions/setup-android@v3
-
-      - name: Android SDK komponentlari
+      - name: Android SDK komponentlari (runner'dagi tayyor SDK)
         run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "cmdline-tools;latest"
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          SDKM="$(command -v sdkmanager || true)"
+          [ -z "$SDKM" ] && SDKM="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | head -n1)"
+          echo "sdkmanager: $SDKM"
+          yes | "$SDKM" --licenses >/dev/null || true
+          "$SDKM" "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Godot va export shablonlarini o'rnatish
         run: |
