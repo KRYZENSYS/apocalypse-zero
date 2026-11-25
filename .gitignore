@@ -1,0 +1,12 @@
+.godot/
+.import/
+*.translation
+build/*
+!build/.gdkeep
+*.apk
+*.aab
+*.keystore
+*.jks
+export_credentials.cfg
+.mono/
+*.tmp
